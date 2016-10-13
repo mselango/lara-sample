@@ -12,7 +12,7 @@
     </div>
 @endif
 
-    {{ Form::open(['url' => 'books']) }}
+    {{ Form::open(['url' => 'books','files'=>'true']) }}
     <div class="form-group">
         {{ Form::label('Name', 'Name:') }}
         {{ Form::text('name',null,['class'=>'form-control']) }}
@@ -22,7 +22,10 @@
         {{ Form::label('Price', 'Price:') }}
         {{ Form::text('price',null,['class'=>'form-control']) }}
     </div>
-   
+   <div class="form-group">
+        {{ Form::label('Image', 'Image:') }}
+        {{ Form::file('photo',null,['class'=>'form-control']) }}
+    </div>
     <div class="form-group">
         {{ Form::submit('Save', ['class' => 'btn btn-primary form-control']) }}
     </div>

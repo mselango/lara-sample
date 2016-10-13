@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use App\Book;
 use App\Repositories\BookRepository;
+use App\Http\Requests\StoreBookPost;
 
 class BookController extends Controller {
 
@@ -24,7 +25,7 @@ class BookController extends Controller {
      */
     public function index() {
 
-        $books = $this->book->findAll();
+        $books = $this->book->paginate(5);
         return view('books.index', ['books' => $books]);
         //
     }
@@ -43,11 +44,13 @@ class BookController extends Controller {
      *
      * @return Response
      */
-    public function store(Request $request) {
-        $this->validate($request, [
-            'name' => 'required|unique:books|max:5|int',
-        ]);
-        $this->book->save($request);
+    public function store(StoreBookPost $request) {
+       
+        $path='';
+        if ($request->photo) {
+             $path =$request->photo->store('books');
+        }
+        $this->book->save($request,$path);       
         $request->session()->flash('success', 'book added successfully !');
         return redirect('books');
     }

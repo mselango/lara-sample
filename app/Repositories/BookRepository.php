@@ -21,13 +21,18 @@ class BookRepository{
         return $this->book->find($id);
     }
     
-    public function findAll(){
+    public function paginate($count){
+        return $this->book->paginate($count);
+    }
+
+        public function findAll(){
         return $this->book->all();
     }
     
-    public function save($data){
+    public function save($data,$photo){
          $this->book->name = $data->name;
          $this->book->price=$data->price;
+         $this->book->photo=$photo;
          $this->book->save();
     }
     public function update($id,$data){
